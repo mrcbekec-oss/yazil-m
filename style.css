@@ -114,6 +114,41 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Örnek Uygulamalar Listesi */
+.nebula-section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin: 2rem 0 1rem 0;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.nebula-examples {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.example-item {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.example-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    padding-left: 16px; /* Küçük bir kayma efekti */
+}
+
 /* Alt kısımdaki aksiyon butonları */
 .nebula-actions {
     margin-top: auto;

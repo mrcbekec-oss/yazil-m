@@ -68,7 +68,29 @@ document.querySelector('h1').addEventListener('click', () => {
     alert('Kod yazmak hiç bu kadar kolay olmamıştı!');
 });`;
 
-    // Başlangıç değerlerini editör kutularına yerleştiriyoruz
+    // Örnek Uygulamalar Veritabanı
+    const examples = {
+        clock: {
+            html: '<div class="clock">\n  <div class="hour"></div>\n  <div class="minute"></div>\n  <div class="second"></div>\n</div>',
+            css: 'body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #282c34; }\n.clock { width: 200px; height: 200px; border: 10px solid white; border-radius: 50%; position: relative; }\n.hour, .minute, .second { position: absolute; background: white; bottom: 50%; left: 50%; transform-origin: bottom; }\n.hour { width: 6px; height: 50px; margin-left: -3px; }\n.minute { width: 4px; height: 70px; margin-left: -2px; }\n.second { width: 2px; height: 80px; margin-left: -1px; background: red; }',
+            js: 'function setDate() {\n  const now = new Date();\n  const seconds = now.getSeconds();\n  const minutes = now.getMinutes();\n  const hours = now.getHours();\n  document.querySelector(".second").style.transform = `rotate(${seconds * 6}deg)`;\n  document.querySelector(".minute").style.transform = `rotate(${minutes * 6}deg)`;\n  document.querySelector(".hour").style.transform = `rotate(${hours * 30}deg)`;\n}\nsetInterval(setDate, 1000);'
+        },
+        todo: {
+            html: '<div class="todo-app">\n  <h2>Yapılacaklar</h2>\n  <input type="text" id="taskInput" placeholder="Yeni görev...">\n  <button onclick="addTask()">Ekle</button>\n  <ul id="taskList"></ul>\n</div>',
+            css: 'body { font-family: sans-serif; background: #f0f2f5; padding: 20px; }\n.todo-app { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }\ninput { padding: 8px; width: 70%; }\nbutton { padding: 8px 16px; background: #6366f1; color: white; border: none; border-radius: 4px; }\nul { list-style: none; padding: 0; margin-top: 20px; }\nli { padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }',
+            js: 'function addTask() {\n  const input = document.getElementById("taskInput");\n  if (!input.value) return;\n  const li = document.createElement("li");\n  li.innerHTML = `${input.value} <button onclick="this.parentElement.remove()">Sil</button>`;\n  document.getElementById("taskList").appendChild(li);\n  input.value = "";\n}'
+        },
+        counter: {
+            html: '<div class="counter-card">\n  <h1>Sayaç</h1>\n  <div id="count">0</div>\n  <button onclick="change(-1)">-</button>\n  <button onclick="change(1)">+</button>\n</div>',
+            css: 'body { display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; }\n.counter-card { text-align: center; padding: 40px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }\n#count { font-size: 60px; font-weight: bold; margin: 20px 0; color: #6366f1; }\nbutton { font-size: 24px; padding: 10px 20px; margin: 5px; cursor: pointer; }',
+            js: 'let currentCount = 0;\nfunction change(val) {\n  currentCount += val;\n  document.getElementById("count").textContent = currentCount;\n}'
+        },
+        card: {
+            html: '<div class="product-card">\n  <div class="badge">Yeni</div>\n  <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff" alt="Ayakkabı">\n  <div class="content">\n    <h3>Nebula Air Max</h3>\n    <p>Modern tasarım, maksimum konfor.</p>\n    <div class="price">1.299 TL</div>\n    <button class="buy-btn">Sepete Ekle</button>\n  </div>\n</div>',
+            css: 'body { background: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: "Outfit", sans-serif; }\n.product-card { background: white; border-radius: 24px; width: 300px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.1); position: relative; }\n.badge { position: absolute; top: 15px; left: 15px; background: #6366f1; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; }\nimg { width: 100%; height: 200px; object-fit: cover; }\n.content { padding: 20px; }\n.price { font-size: 24px; font-weight: 700; margin: 15px 0; color: #1e293b; }\n.buy-btn { width: 100%; background: #0f172a; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s; }\n.buy-btn:hover { background: #6366f1; }',
+            js: 'document.querySelector(".buy-btn").addEventListener("click", () => alert("Ürün sepete eklendi!"));'
+        }
+    };
     // Eğer URL'de kayıtlı bir kod varsa onu yükle, yoksa varsayılanları yükle
     const loadFromURL = () => {
         try {
@@ -147,6 +169,23 @@ document.querySelector('h1').addEventListener('click', () => {
             // Başlık çubuğundaki dosya ismini güncelle (index.html, style.css vb.)
             const extensions = { html: 'index.html', css: 'style.css', js: 'script.js' };
             fileLabel.textContent = extensions[target];
+        });
+    });
+
+    // Örnekleri Yükleme Mantığı
+    const exampleBtns = document.querySelectorAll('.example-item');
+    exampleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const type = btn.getAttribute('data-example');
+            const data = examples[type];
+            
+            if (data && confirm('Bu örneği yüklemek istediğinizden emin misiniz? Mevcut kodlarınız silinecektir.')) {
+                htmlEditor.value = data.html;
+                cssEditor.value = data.css;
+                jsEditor.value = data.js;
+                updatePreview();
+                showToast(`${btn.textContent} örneği yüklendi! ✨`);
+            }
         });
     });
 
