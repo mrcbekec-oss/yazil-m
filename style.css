@@ -114,39 +114,66 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Örnek Uygulamalar Listesi */
-.nebula-section-title {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    margin: 2rem 0 1rem 0;
-    letter-spacing: 1px;
-    font-weight: 600;
-}
-
-.nebula-examples {
+/* Kütüphane Paneli Stilleri */
+.library-pane {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    padding: 30px !important;
+    overflow-y: auto !important;
 }
 
-.example-item {
-    background: transparent;
-    border: none;
+.library-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.library-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.library-header p {
     color: var(--text-secondary);
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: left;
-    font-family: var(--font-main);
     font-size: 0.9rem;
+}
+
+.library-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.lib-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
     transition: var(--transition);
 }
 
-.example-item:hover {
-    background: rgba(255, 255, 255, 0.05);
+.lib-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--accent-primary);
+    transform: translateY(-5px);
+}
+
+.lib-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.lib-card h3 {
+    font-size: 1rem;
+    margin-bottom: 5px;
     color: var(--text-primary);
-    padding-left: 16px; /* Küçük bir kayma efekti */
+}
+
+.lib-card p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
 }
 
 /* Alt kısımdaki aksiyon butonları */

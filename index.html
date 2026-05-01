@@ -35,17 +35,11 @@
                 <button class="nav-item" data-target="js" id="btn-js">
                     <span class="icon">JS</span>
                 </button>
+                <button class="nav-item" data-target="lib" id="btn-lib">
+                    <span class="icon">Kütüphane</span>
+                </button>
             </nav>
 
-            <!-- Örnek Uygulamalar Bölümü -->
-            <div class="nebula-section-title">Örnek Uygulamalar</div>
-            <div class="nebula-examples">
-                <button class="example-item" data-example="clock">Analog Saat</button>
-                <button class="example-item" data-example="todo">Yapılacaklar Listesi</button>
-                <button class="example-item" data-example="counter">Sayaç Uygulaması</button>
-                <button class="example-item" data-example="card">Ürün Kartı</button>
-            </div>
-            
             <!-- Aksiyon butonları: Örn. Kodları bilgisayara indirme -->
             <div class="nebula-actions">
                 <button id="btn-share" class="action-btn secondary">
@@ -74,6 +68,36 @@
                     <textarea id="html-editor" class="editor-pane active" placeholder="HTML kodunuzu buraya yazın..." spellcheck="false"></textarea>
                     <textarea id="css-editor" class="editor-pane" placeholder="CSS kodunuzu buraya yazın..." spellcheck="false"></textarea>
                     <textarea id="js-editor" class="editor-pane" placeholder="JavaScript kodunuzu buraya yazın..." spellcheck="false"></textarea>
+                    
+                    <!-- Kütüphane (Örnekler) Bölümü -->
+                    <div id="lib-editor" class="editor-pane library-pane">
+                        <div class="library-header">
+                            <h2>Uygulama Kütüphanesi</h2>
+                            <p>Yüklemek istediğiniz şablonu seçin:</p>
+                        </div>
+                        <div class="library-grid">
+                            <div class="lib-card" data-example="clock">
+                                <div class="lib-icon">🕒</div>
+                                <h3>Analog Saat</h3>
+                                <p>CSS Animasyonlu</p>
+                            </div>
+                            <div class="lib-card" data-example="todo">
+                                <div class="lib-icon">📝</div>
+                                <h3>Yapılacaklar</h3>
+                                <p>İnteraktif Liste</p>
+                            </div>
+                            <div class="lib-card" data-example="counter">
+                                <div class="lib-icon">🔢</div>
+                                <h3>Sayaç</h3>
+                                <p>JS Mantık Örneği</p>
+                            </div>
+                            <div class="lib-card" data-example="card">
+                                <div class="lib-icon">🛍️</div>
+                                <h3>Ürün Kartı</h3>
+                                <p>Modern Tasarım</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

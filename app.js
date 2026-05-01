@@ -167,24 +167,33 @@ document.querySelector('h1').addEventListener('click', () => {
             });
 
             // Başlık çubuğundaki dosya ismini güncelle (index.html, style.css vb.)
-            const extensions = { html: 'index.html', css: 'style.css', js: 'script.js' };
+            const extensions = { 
+                html: 'index.html', 
+                css: 'style.css', 
+                js: 'script.js',
+                lib: 'Kütüphane'
+            };
             fileLabel.textContent = extensions[target];
         });
     });
 
-    // Örnekleri Yükleme Mantığı
-    const exampleBtns = document.querySelectorAll('.example-item');
-    exampleBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const type = btn.getAttribute('data-example');
+    // Örnekleri Yükleme Mantığı (Kütüphane Kartları)
+    const exampleCards = document.querySelectorAll('.lib-card');
+    exampleCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const type = card.getAttribute('data-example');
             const data = examples[type];
             
             if (data && confirm('Bu örneği yüklemek istediğinizden emin misiniz? Mevcut kodlarınız silinecektir.')) {
                 htmlEditor.value = data.html;
                 cssEditor.value = data.css;
                 jsEditor.value = data.js;
+                
+                // İlk sekmeye (HTML) geri dön
+                document.getElementById('btn-html').click();
+                
                 updatePreview();
-                showToast(`${btn.textContent} örneği yüklendi! ✨`);
+                showToast(`${card.querySelector('h3').textContent} örneği yüklendi! ✨`);
             }
         });
     });
