@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nebula IDE - Modern Kod Editörü</title>
+    <meta name="description" content="Hızlı ve kolay web geliştirme için modern, cam efektli kod editörü.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="nebula-container">
+        <!-- Sidebar / Navigation -->
+        <aside class="nebula-sidebar">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <h1>Nebula IDE</h1>
+            </div>
+            <nav class="nebula-nav">
+                <button class="nav-item active" data-target="html" id="btn-html">
+                    <span class="icon">HTML</span>
+                </button>
+                <button class="nav-item" data-target="css" id="btn-css">
+                    <span class="icon">CSS</span>
+                </button>
+                <button class="nav-item" data-target="js" id="btn-js">
+                    <span class="icon">JS</span>
+                </button>
+            </nav>
+            <div class="nebula-actions">
+                <button id="btn-export" class="action-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Dışa Aktar
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Editor Section -->
+        <main class="nebula-main">
+            <div class="editor-section">
+                <div class="editor-header">
+                    <span id="current-file-label">index.html</span>
+                    <div class="header-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="editor-container">
+                    <textarea id="html-editor" class="editor-pane active" placeholder="HTML kodunuzu buraya yazın..." spellcheck="false"></textarea>
+                    <textarea id="css-editor" class="editor-pane" placeholder="CSS kodunuzu buraya yazın..." spellcheck="false"></textarea>
+                    <textarea id="js-editor" class="editor-pane" placeholder="JavaScript kodunuzu buraya yazın..." spellcheck="false"></textarea>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="preview-section">
+                <div class="preview-header">
+                    <span>Canlı Önizleme</span>
+                    <div class="preview-status">
+                        <span class="status-dot"></span> Canlı
+                    </div>
+                </div>
+                <div class="preview-container">
+                    <iframe id="preview-iframe" title="Kod Önizleme"></iframe>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
