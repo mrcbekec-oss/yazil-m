@@ -1,5 +1,7 @@
+// Sayfa tamamen yüklendiğinde çalışacak olan ana fonksiyon
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elements
+    
+    // HTML üzerindeki elemanları JavaScript'e tanıtıyoruz (bağlıyoruz)
     const htmlEditor = document.getElementById('html-editor');
     const cssEditor = document.getElementById('css-editor');
     const jsEditor = document.getElementById('js-editor');
@@ -11,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const editorPanes = document.querySelectorAll('.editor-pane');
     const btnExport = document.getElementById('btn-export');
 
-    // Initial Content
+    // Başlangıçta editörde görünecek örnek HTML kodu
     const initialHTML = `<!-- Merhaba! Kodunuzu buraya yazmaya başlayın -->
 <div class="welcome">
     <h1>Nebula IDE'ye Hoş Geldiniz!</h1>
@@ -26,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 </div>`;
 
+    // Başlangıçta editörde görünecek örnek CSS (stil) kodu
     const initialCSS = `body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -55,24 +58,26 @@ h1 { color: #6366f1; }
 }
 ul { list-style-type: '🚀 '; }`;
 
+    // Başlangıçta editörde görünecek örnek JavaScript kodu
     const initialJS = `console.log('Nebula IDE hazır!');
 
-// Küçük bir etkileşim ekleyelim
+// Küçük bir etkileşim ekleyelim: Başlığa tıklayınca mesaj verir
 document.querySelector('h1').addEventListener('click', () => {
     alert('Kod yazmak hiç bu kadar kolay olmamıştı!');
 });`;
 
-    // Set initial values
+    // Başlangıç değerlerini editör kutularına yerleştiriyoruz
     htmlEditor.value = initialHTML;
     cssEditor.value = initialCSS;
     jsEditor.value = initialJS;
 
-    // Update Preview Function
+    // Önizleme ekranını (sağ taraf) güncelleyen ana fonksiyon
     function updatePreview() {
         const html = htmlEditor.value;
         const css = `<style>${cssEditor.value}</style>`;
         const js = `<script>${jsEditor.value}<\/script>`;
         
+        // HTML, CSS ve JS kodlarını tek bir döküman haline getiriyoruz
         const combined = `
             <!DOCTYPE html>
             <html>
@@ -84,32 +89,33 @@ document.querySelector('h1').addEventListener('click', () => {
             </html>
         `;
         
+        // Oluşturulan dökümanı tarayıcının anlayacağı bir "dosya" (blob) haline getirip iframe'e yüklüyoruz
         const blob = new Blob([combined], { type: 'text/html' });
         previewIframe.src = URL.createObjectURL(blob);
     }
 
-    // Debounced Update
+    // Performans için gecikmeli güncelleme (Kullanıcı yazmayı bitirdiğinde günceller)
     let timeout;
     function debouncedUpdate() {
         clearTimeout(timeout);
-        timeout = setTimeout(updatePreview, 500);
+        timeout = setTimeout(updatePreview, 500); // 0.5 saniye bekle
     }
 
-    // Event Listeners for Input
+    // Editörlere her yazı yazıldığında (input) önizlemeyi güncelle
     htmlEditor.addEventListener('input', debouncedUpdate);
     cssEditor.addEventListener('input', debouncedUpdate);
     jsEditor.addEventListener('input', debouncedUpdate);
 
-    // Tab Switching
+    // Sekmeler arası geçişi sağlayan mantık
     navItems.forEach(item => {
         item.addEventListener('click', () => {
             const target = item.getAttribute('data-target');
             
-            // Update Navigation
+            // Aktif sekmeyi görsel olarak değiştir
             navItems.forEach(i => i.classList.remove('active'));
             item.classList.add('active');
             
-            // Update Editor Visibility
+            // İlgili editör kutusunu göster, diğerlerini gizle
             editorPanes.forEach(pane => {
                 pane.classList.remove('active');
                 if (pane.id === `${target}-editor`) {
@@ -117,13 +123,13 @@ document.querySelector('h1').addEventListener('click', () => {
                 }
             });
 
-            // Update Label
+            // Başlık çubuğundaki dosya ismini güncelle (index.html, style.css vb.)
             const extensions = { html: 'index.html', css: 'style.css', js: 'script.js' };
             fileLabel.textContent = extensions[target];
         });
     });
 
-    // Export Functionality
+    // Yazılan kodları bilgisayara dosya olarak indirme fonksiyonu
     btnExport.addEventListener('click', () => {
         const html = htmlEditor.value;
         const css = `<style>${cssEditor.value}</style>`;
@@ -142,6 +148,7 @@ document.querySelector('h1').addEventListener('click', () => {
 </body>
 </html>`;
 
+        // Dosya indirme işlemini tetikliyoruz
         const blob = new Blob([fullHTML], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -152,10 +159,11 @@ document.querySelector('h1').addEventListener('click', () => {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
 
+        // Kullanıcıya başarı mesajı gösteriyoruz
         showToast('Proje başarıyla indirildi! 🚀');
     });
 
-    // Toast Notification
+    // Ekranda kısa süreli bildirim (toast) gösterme fonksiyonu
     function showToast(message) {
         toast.textContent = message;
         toast.classList.add('show');
@@ -164,6 +172,6 @@ document.querySelector('h1').addEventListener('click', () => {
         }, 3000);
     }
 
-    // Initialize
+    // Uygulama ilk açıldığında önizlemeyi bir kez çalıştır
     updatePreview();
 });

@@ -1,42 +1,47 @@
+/* Değişkenler: Renkler ve yazı tiplerini tek bir yerden yönetmek için kullanılır */
 :root {
-    --bg-main: #0a0b10;
-    --bg-card: rgba(255, 255, 255, 0.05);
-    --bg-sidebar: rgba(15, 17, 26, 0.8);
-    --border-color: rgba(255, 255, 255, 0.1);
-    --accent-primary: #6366f1;
-    --accent-secondary: #a855f7;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --font-main: 'Outfit', sans-serif;
-    --font-code: 'Fira Code', monospace;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --bg-main: #0a0b10; /* Ana arka plan rengi */
+    --bg-card: rgba(255, 255, 255, 0.05); /* Kutuların (card) şeffaf arka planı */
+    --bg-sidebar: rgba(15, 17, 26, 0.8); /* Sol menünün şeffaf arka planı */
+    --border-color: rgba(255, 255, 255, 0.1); /* Kenarlık rengi */
+    --accent-primary: #6366f1; /* Ana vurgu rengi (Mor/Mavi) */
+    --accent-secondary: #a855f7; /* İkinci vurgu rengi (Pembe/Mor) */
+    --text-primary: #f8fafc; /* Ana yazı rengi */
+    --text-secondary: #94a3b8; /* Yardımcı (soluk) yazı rengi */
+    --font-main: 'Outfit', sans-serif; /* Ana yazı tipi */
+    --font-code: 'Fira Code', monospace; /* Kod yazım yazı tipi */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Akıcı geçiş efekti */
 }
 
+/* Tüm elemanlar için temel sıfırlama ayarları */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Sayfanın genel gövdesi */
 body {
     background: var(--bg-main);
+    /* Arka plana şık bir degrade (renk geçişi) ekler */
     background-image: 
         radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
         radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%);
     color: var(--text-primary);
     font-family: var(--font-main);
     height: 100vh;
-    overflow: hidden;
+    overflow: hidden; /* Sayfa dışına taşmaları gizler */
 }
 
+/* Ana kapsayıcı kutu */
 .nebula-container {
-    display: flex;
+    display: flex; /* İçindeki elemanları yan yana dizer */
     height: 100vh;
     width: 100vw;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); /* Arka planı hafif bulanıklaştırır (cam efekti) */
 }
 
-/* Sidebar Styling */
+/* Sol Menü (Sidebar) Ayarları */
 .nebula-sidebar {
     width: 260px;
     background: var(--bg-sidebar);
@@ -47,6 +52,7 @@ body {
     z-index: 10;
 }
 
+/* Logo Bölümü */
 .logo {
     display: flex;
     align-items: center;
@@ -54,6 +60,7 @@ body {
     margin-bottom: 3rem;
 }
 
+/* Logo İkonu (Renkli kutu) */
 .logo-icon {
     width: 32px;
     height: 32px;
@@ -68,6 +75,7 @@ body {
     letter-spacing: -0.5px;
 }
 
+/* Navigasyon (Sekme) Listesi */
 .nebula-nav {
     display: flex;
     flex-direction: column;
@@ -75,6 +83,7 @@ body {
     flex-grow: 1;
 }
 
+/* Sekme Butonları */
 .nav-item {
     background: transparent;
     border: 1px solid transparent;
@@ -91,11 +100,13 @@ body {
     transition: var(--transition);
 }
 
+/* Butonun üzerine gelince olacaklar */
 .nav-item:hover {
     background: rgba(255, 255, 255, 0.03);
     color: var(--text-primary);
 }
 
+/* Aktif seçili olan sekme */
 .nav-item.active {
     background: var(--bg-card);
     border-color: var(--border-color);
@@ -103,10 +114,12 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Alt kısımdaki aksiyon butonları */
 .nebula-actions {
     margin-top: auto;
 }
 
+/* Dışa Aktar Butonu */
 .action-btn {
     width: 100%;
     background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
@@ -124,11 +137,11 @@ body {
 }
 
 .action-btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px); /* Hafif yukarı kalkar */
     box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
 }
 
-/* Main Content Area */
+/* Ana İçerik Alanı (Editör ve Önizleme) */
 .nebula-main {
     flex-grow: 1;
     display: flex;
@@ -137,6 +150,7 @@ body {
     gap: 1.5rem;
 }
 
+/* Editör ve Önizleme Kutuları */
 .editor-section, .preview-section {
     flex: 1;
     display: flex;
@@ -148,6 +162,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
+/* Kutuların başlık kısımları */
 .editor-header, .preview-header {
     padding: 12px 20px;
     background: rgba(0, 0, 0, 0.2);
@@ -160,6 +175,7 @@ body {
     font-weight: 500;
 }
 
+/* Pencere kapatma/küçültme noktaları (Süs) */
 .header-dots span {
     display: inline-block;
     width: 10px;
@@ -171,11 +187,13 @@ body {
 .header-dots span:nth-child(2) { background: #ffbd2e; }
 .header-dots span:nth-child(3) { background: #27c93f; }
 
+/* Editör Yazı Alanı Kapsayıcısı */
 .editor-container {
     flex-grow: 1;
     position: relative;
 }
 
+/* Kod yazılan metin alanı */
 .editor-pane {
     position: absolute;
     top: 0;
@@ -191,16 +209,18 @@ body {
     line-height: 1.6;
     resize: none;
     outline: none;
-    opacity: 0;
+    opacity: 0; /* Başlangıçta gizli */
     pointer-events: none;
     transition: opacity 0.2s ease;
 }
 
+/* Aktif olan editör alanı */
 .editor-pane.active {
     opacity: 1;
     pointer-events: all;
 }
 
+/* Sağ taraftaki önizleme ekranı kutusu */
 .preview-container {
     flex-grow: 1;
     background: white;
@@ -215,6 +235,7 @@ body {
     border: none;
 }
 
+/* Canlı durumu göstergesi */
 .preview-status {
     display: flex;
     align-items: center;
@@ -222,6 +243,7 @@ body {
     font-size: 0.75rem;
 }
 
+/* Yanıp sönen yeşil nokta */
 .status-dot {
     width: 8px;
     height: 8px;
@@ -231,12 +253,14 @@ body {
     animation: pulse 2s infinite;
 }
 
+/* Yanıp sönme animasyonu */
 @keyframes pulse {
     0% { opacity: 1; }
     50% { opacity: 0.4; }
     100% { opacity: 1; }
 }
 
+/* Bildirim Baloncuğu */
 .toast {
     position: fixed;
     bottom: 24px;
@@ -247,19 +271,20 @@ body {
     border-radius: 12px;
     color: white;
     backdrop-filter: blur(10px);
-    transform: translateY(100px);
+    transform: translateY(100px); /* Başlangıçta ekran dışında */
     transition: var(--transition);
     z-index: 100;
 }
 
+/* Bildirim görünür olduğunda */
 .toast.show {
     transform: translateY(0);
 }
 
-/* Responsive */
+/* Küçük ekranlar (Telefon/Tablet) için ayarlar */
 @media (max-width: 1024px) {
     .nebula-container {
-        flex-direction: column;
+        flex-direction: column; /* Üst üste dizer */
     }
     .nebula-sidebar {
         width: 100%;
@@ -267,14 +292,14 @@ body {
         padding: 1rem;
     }
     .nebula-nav {
-        flex-direction: row;
+        flex-direction: row; /* Menüleri yan yana dizer */
         margin-bottom: 0;
     }
     .logo {
         margin-bottom: 1rem;
     }
     .nebula-actions {
-        display: none;
+        display: none; /* Mobilde indirme butonunu gizle */
     }
     .nebula-main {
         height: calc(100vh - 160px);
