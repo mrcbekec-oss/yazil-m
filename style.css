@@ -157,12 +157,13 @@ body {
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
-    gap: 1.5rem;
+    /* Gap kaldırıldı çünkü resizer araya girecek */
 }
 
 /* Editör ve Önizleme Kutuları */
-.editor-section, .preview-section {
-    flex: 1;
+.editor-section {
+    height: 45%; /* Başlangıç yüksekliği */
+    min-height: 100px;
     display: flex;
     flex-direction: column;
     background: var(--bg-card);
@@ -170,6 +171,44 @@ body {
     border: 1px solid var(--border-color);
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.preview-section {
+    flex-grow: 1; /* Kalan tüm alanı kapla */
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Resizer (Sürükleme Çubuğu) Stili */
+.resizer {
+    height: 16px;
+    cursor: row-resize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    user-select: none;
+    z-index: 5;
+}
+
+.resizer:hover .resizer-handle {
+    background: var(--accent-primary);
+    width: 60px;
+    box-shadow: 0 0 10px var(--accent-primary);
+}
+
+.resizer-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    transition: var(--transition);
 }
 
 /* Kutuların başlık kısımları */

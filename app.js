@@ -225,6 +225,41 @@ document.querySelector('h1').addEventListener('click', () => {
         }, 3000);
     }
 
+    // Resizer (Boyutlandırma) Mantığı
+    const resizer = document.getElementById('resizer');
+    const editorSection = document.getElementById('editor-section');
+    const mainContainer = document.querySelector('.nebula-main');
+    let isResizing = false;
+
+    resizer.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        document.body.style.cursor = 'row-resize';
+        // Sürükleme sırasında iframe'in mouse olaylarını engellemesi için pointer-events'i kapatıyoruz
+        previewIframe.style.pointerEvents = 'none';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return;
+
+        const containerRect = mainContainer.getBoundingClientRect();
+        const relativeY = e.clientY - containerRect.top;
+        
+        // Yüzdelik hesaplama
+        let percentage = (relativeY / containerRect.height) * 100;
+        
+        // Sınırları belirle (%10 ile %90 arası)
+        if (percentage < 10) percentage = 10;
+        if (percentage > 90) percentage = 90;
+
+        editorSection.style.height = `${percentage}%`;
+    });
+
+    document.addEventListener('mouseup', () => {
+        isResizing = false;
+        document.body.style.cursor = 'default';
+        previewIframe.style.pointerEvents = 'all';
+    });
+
     // Uygulama ilk açıldığında önizlemeyi bir kez çalıştır
     updatePreview();
 });

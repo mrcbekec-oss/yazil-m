@@ -53,7 +53,7 @@
         <!-- Ana Editör ve Önizleme Alanı -->
         <main class="nebula-main">
             <!-- Kod Yazma Bölümü -->
-            <div class="editor-section">
+            <div class="editor-section" id="editor-section">
                 <div class="editor-header">
                     <span id="current-file-label">index.html</span>
                     <div class="header-dots">
@@ -68,8 +68,13 @@
                 </div>
             </div>
 
+            <!-- Ayarlanabilir Boyut Çizgisi (Resizer) -->
+            <div class="resizer" id="resizer">
+                <div class="resizer-handle"></div>
+            </div>
+
             <!-- Canlı Önizleme Bölümü (Kodların sonucunu gösterir) -->
-            <div class="preview-section">
+            <div class="preview-section" id="preview-section">
                 <div class="preview-header">
                     <span>Canlı Önizleme</span>
                     <div class="preview-controls">
