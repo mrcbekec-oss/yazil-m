@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const navItems = document.querySelectorAll('.nav-item');
     const editorPanes = document.querySelectorAll('.editor-pane');
     const btnExport = document.getElementById('btn-export');
+    const btnShare = document.getElementById('btn-share');
+    const btnOpenNew = document.getElementById('btn-open-new');
 
     // Başlangıçta editörde görünecek örnek HTML kodu
     const initialHTML = `<!-- Merhaba! Kodunuzu buraya yazmaya başlayın -->
@@ -67,9 +69,28 @@ document.querySelector('h1').addEventListener('click', () => {
 });`;
 
     // Başlangıç değerlerini editör kutularına yerleştiriyoruz
-    htmlEditor.value = initialHTML;
-    cssEditor.value = initialCSS;
-    jsEditor.value = initialJS;
+    // Eğer URL'de kayıtlı bir kod varsa onu yükle, yoksa varsayılanları yükle
+    const loadFromURL = () => {
+        try {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                const decoded = JSON.parse(decodeURIComponent(escape(atob(hash))));
+                htmlEditor.value = decoded.html || initialHTML;
+                cssEditor.value = decoded.css || initialCSS;
+                jsEditor.value = decoded.js || initialJS;
+                return true;
+            }
+        } catch (e) {
+            console.error("URL'den kod yüklenemedi:", e);
+        }
+        return false;
+    };
+
+    if (!loadFromURL()) {
+        htmlEditor.value = initialHTML;
+        cssEditor.value = initialCSS;
+        jsEditor.value = initialJS;
+    }
 
     // Önizleme ekranını (sağ taraf) güncelleyen ana fonksiyon
     function updatePreview() {
@@ -161,6 +182,38 @@ document.querySelector('h1').addEventListener('click', () => {
 
         // Kullanıcıya başarı mesajı gösteriyoruz
         showToast('Proje başarıyla indirildi! 🚀');
+    });
+
+    // Paylaşma Fonksiyonu: Kodları URL'e gömer ve kopyalar
+    btnShare.addEventListener('click', () => {
+        const data = {
+            html: htmlEditor.value,
+            css: cssEditor.value,
+            js: jsEditor.value
+        };
+        
+        // Veriyi Base64 formatına çeviriyoruz
+        const base64 = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+        const shareURL = `${window.location.origin}${window.location.pathname}#${base64}`;
+        
+        // Panoya kopyala
+        navigator.clipboard.writeText(shareURL).then(() => {
+            showToast('Paylaşım linki kopyalandı! 🔗');
+        }).catch(() => {
+            showToast('Link kopyalanamadı! ❌');
+        });
+    });
+
+    // Yeni Sekmede Aç Fonksiyonu
+    btnOpenNew.addEventListener('click', () => {
+        const html = htmlEditor.value;
+        const css = `<style>${cssEditor.value}</style>`;
+        const js = `<script>${jsEditor.value}<\/script>`;
+        
+        const combined = `<!DOCTYPE html><html><head>${css}</head><body>${html}${js}</body></html>`;
+        const blob = new Blob([combined], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
     });
 
     // Ekranda kısa süreli bildirim (toast) gösterme fonksiyonu

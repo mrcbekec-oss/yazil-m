@@ -141,6 +141,16 @@ body {
     box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
 }
 
+.action-btn.secondary {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    margin-bottom: 10px;
+}
+
+.action-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
 /* Ana İçerik Alanı (Editör ve Önizleme) */
 .nebula-main {
     flex-grow: 1;
@@ -173,6 +183,30 @@ body {
     font-size: 0.85rem;
     color: var(--text-secondary);
     font-weight: 500;
+}
+
+.preview-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon-btn-small {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.icon-btn-small:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
 }
 
 /* Pencere kapatma/küçültme noktaları (Süs) */
