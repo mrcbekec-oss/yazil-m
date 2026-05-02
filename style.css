@@ -239,6 +239,74 @@ body {
     font-weight: 600;
 }
 
+/* Uygulama Yapılandırma Paneli */
+.app-config-pane {
+    padding: 40px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto !important;
+}
+
+.app-config-form {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 30px;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+}
+
+.config-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.config-group label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.config-group input[type="text"] {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: white;
+    font-family: var(--font-main);
+    transition: var(--transition);
+}
+
+.config-group input[type="text"]:focus {
+    border-color: var(--accent-primary);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.config-group input[type="color"] {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.config-actions {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.config-help {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
 /* Alt kısımdaki aksiyon butonları */
 .nebula-actions {
     margin-top: auto;

@@ -172,7 +172,8 @@ document.querySelector('h1').addEventListener('click', () => {
                 css: 'style.css', 
                 js: 'script.js',
                 lib: 'Kütüphane',
-                levels: 'Bölümler'
+                levels: 'Bölümler',
+                'app-config': 'Uygulama Yapılandırıcı'
             };
             fileLabel.textContent = extensions[target];
         });
@@ -264,6 +265,89 @@ document.querySelector('h1').addEventListener('click', () => {
         const url = URL.createObjectURL(blob);
         window.open(url, '_blank');
     });
+
+    // PWA (Mobil Uygulama) Oluşturma Mantığı
+    const btnMakePWA = document.getElementById('btn-make-pwa');
+    const inputAppName = document.getElementById('app-name');
+    const inputAppShortName = document.getElementById('app-short-name');
+    const inputAppThemeColor = document.getElementById('app-theme-color');
+
+    btnMakePWA.addEventListener('click', () => {
+        const name = inputAppName.value || 'Nebula App';
+        const shortName = inputAppShortName.value || 'NebulaApp';
+        const themeColor = inputAppThemeColor.value || '#6366f1';
+
+        // 1. Dinamik manifest.json oluştur
+        const manifest = {
+            "name": name,
+            "short_name": shortName,
+            "start_url": "index.html",
+            "display": "standalone",
+            "background_color": "#000000",
+            "theme_color": themeColor,
+            "icons": [
+                {
+                    "src": "https://cdn-icons-png.flaticon.com/512/2586/2586111.png",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                }
+            ]
+        };
+
+        // 2. Sabit sw.js (Service Worker) içeriği
+        const swContent = `
+const CACHE_NAME = 'nebula-app-v1';
+const assets = ['./', './index.html'];
+
+self.addEventListener('install', e => {
+    e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(assets)));
+});
+
+self.addEventListener('fetch', e => {
+    e.respondWith(caches.match(e.request).then(res => res || fetch(e.request)));
+});`;
+
+        // 3. index.html içeriğini PWA uyumlu hale getir
+        const htmlContent = `<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${name}</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="${themeColor}">
+    <style>${cssEditor.value}</style>
+</head>
+<body>
+    ${htmlEditor.value}
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+        ${jsEditor.value}
+    </script>
+</body>
+</html>`;
+
+        // Dosyaları indir
+        downloadFile('index.html', htmlContent, 'text/html');
+        setTimeout(() => downloadFile('manifest.json', JSON.stringify(manifest, null, 2), 'application/json'), 500);
+        setTimeout(() => downloadFile('sw.js', swContent, 'application/javascript'), 1000);
+
+        showToast('PWA dosyaları hazırlandı ve indiriliyor! 📱');
+    });
+
+    function downloadFile(filename, content, type) {
+        const blob = new Blob([content], { type: type });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
 
     // Ekranda kısa süreli bildirim (toast) gösterme fonksiyonu
     function showToast(message) {
