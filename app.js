@@ -171,7 +171,8 @@ document.querySelector('h1').addEventListener('click', () => {
                 html: 'index.html', 
                 css: 'style.css', 
                 js: 'script.js',
-                lib: 'Kütüphane'
+                lib: 'Kütüphane',
+                levels: 'Bölümler'
             };
             fileLabel.textContent = extensions[target];
         });
